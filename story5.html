@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Kasa Jizo</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body{font-family:system-ui;padding:20px;}
+.story{background:#f7f9fc;padding:16px;border-radius:10px;}
+.answer{display:none;background:#eef;padding:10px;margin-top:10px;}
+</style>
+</head>
+
+<body onbeforeunload="stopVoice()">
+
+<h2>Kasa Jizo</h2>
+<button onclick="speak()">🔊 Listen Slowly</button>
+
+<div class="story" id="story">
+One snowy day, an old man met stone statues.
+He gave them hats to keep them warm.
+That night, gifts came to his house.
+
+The old man was happy.
+Kindness brings happiness.
+</div>
+
+<h3>Quiz 1 (Choose)</h3>
+What did the old man give?<br>
+<input type="radio" name="q1">Food<br>
+<input type="radio" name="q1">Hats<br>
+<input type="radio" name="q1">Shoes<br>
+
+<h3>Quiz 2 (Write)</h3>
+Why was the old man happy?<br>
+<input type="text">
+
+<button onclick="show()">Check</button>
+<div class="answer" id="ans">
+Quiz 1: Hats<br>
+Quiz 2: He received gifts / He was kind.
+</div>
+
+<br>
+<a href="index.html" onclick="stopVoice()">⬅ Back to Home</a>
+
+<script>
+function speak(){
+ stopVoice();
+ const u=new SpeechSynthesisUtterance(story.innerText);
+ u.lang="en-US";u.rate=0.55;u.pitch=1.2;
+ speechSynthesis.speak(u);
+}
+function stopVoice(){speechSynthesis.cancel();}
+function show(){ans.style.display="block";}
+</script>
+
+</body>
+</html>
