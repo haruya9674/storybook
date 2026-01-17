@@ -2,29 +2,25 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>English Story Game</title>
+<title>The Rabbit and the Turtle</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
 body{
   font-family: system-ui, sans-serif;
-  background:#f7f9fc;
+  background:#ffffff;
   padding:20px;
   line-height:1.6;
 }
-h1{margin-top:0;}
 button{
   padding:10px 16px;
-  margin:8px 0;
+  margin:10px 0;
   font-size:16px;
 }
-.story-box{
-  background:white;
+.story{
+  background:#f7f9fc;
   padding:16px;
   border-radius:10px;
-}
-.question-box{
-  margin-top:20px;
 }
 .answer{
   display:none;
@@ -33,21 +29,18 @@ button{
   border-radius:8px;
   margin-top:10px;
 }
-.back{
-  margin-top:30px;
-}
 </style>
 </head>
 
 <body>
 
-<h1 id="story-title">The Rabbit and the Turtle</h1>
+<h2>The Rabbit and the Turtle</h2>
 
 <button onclick="speak()">🔊 Listen Slowly</button>
 
-<div class="story-box" id="story">
+<div class="story" id="story">
 One sunny day, a rabbit met a turtle in the forest.
-The rabbit was very fast and proud of himself.
+The rabbit was very fast and proud.
 The turtle was slow, but calm and kind.
 
 The rabbit said, “You are too slow.”
@@ -57,52 +50,50 @@ The race started.
 The rabbit ran very fast and went far ahead.
 He looked back and saw the turtle far behind.
 
-“I have time,” said the rabbit.
+“I have plenty of time,” said the rabbit.
 He sat under a tree and fell asleep.
 
 The turtle walked step by step.
 He did not stop.
 He passed the sleeping rabbit.
 
-At the end, the turtle reached the finish line first.
+At the end of the race, the turtle reached the finish line first.
 The rabbit woke up and ran fast, but it was too late.
 
 The turtle won the race.
 Slow and steady wins the race.
 </div>
 
-<div class="question-box">
 <h3>Questions</h3>
 <ol>
   <li>Who were in the race?</li>
-  <li>Why did the rabbit stop?</li>
+  <li>Why did the rabbit sleep?</li>
   <li>What did the turtle do?</li>
-  <li>Who won the race and why?</li>
+  <li>Who won and why?</li>
 </ol>
 
 <button onclick="showAnswer()">✅ Check Answers</button>
 
 <div class="answer" id="answer">
 1. A rabbit and a turtle.<br>
-2. He thought he had enough time and slept.<br>
+2. He thought he had enough time.<br>
 3. He walked slowly and did not stop.<br>
 4. The turtle won because he kept going.
 </div>
-</div>
 
-<div class="back">
+<br>
 <a href="index.html">⬅ Back to Home</a>
-</div>
 
 <script>
 function speak(){
   speechSynthesis.cancel();
-  const text = document.getElementById("story").innerText;
-  const utterance = new SpeechSynthesisUtterance(text);
-  utterance.lang = "en-US";
-  utterance.rate = 0.75;   // ゆっくり
-  utterance.pitch = 1.2;   // やさしい
-  speechSynthesis.speak(utterance);
+  const u = new SpeechSynthesisUtterance(
+    document.getElementById("story").innerText
+  );
+  u.lang="en-US";
+  u.rate=0.75;   // ゆっくり
+  u.pitch=1.2;  // やさしい
+  speechSynthesis.speak(u);
 }
 
 function showAnswer(){
