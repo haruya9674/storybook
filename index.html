@@ -2,103 +2,72 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>English Story Learning</title>
+<title>English Story Game</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <style>
-body {
+body{
   font-family: system-ui, sans-serif;
-  background: #f2f6fb;
-  padding: 20px;
+  background:#f5f7fb;
+  padding:20px;
 }
-
-.container {
-  max-width: 800px;
-  margin: auto;
-  background: #fff;
-  padding: 24px;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0,0,0,.1);
+h1{ text-align:center; }
+.lang button{
+  margin:4px;
+  padding:6px 12px;
 }
-
-h1 {
-  text-align: center;
-}
-
-.lang-buttons {
-  text-align: center;
-  margin-bottom: 15px;
-}
-
-.lang-buttons button {
-  margin: 4px;
-  padding: 6px 12px;
-}
-
-.story-list button {
-  width: 100%;
-  padding: 12px;
-  margin-top: 10px;
-  font-size: 16px;
-  border-radius: 8px;
-  border: none;
-  background: #4caf50;
-  color: white;
-  cursor: pointer;
-}
-
-.story-list button:hover {
-  opacity: 0.9;
+.story-list a{
+  display:block;
+  margin:10px 0;
+  padding:12px;
+  background:white;
+  border-radius:8px;
+  text-decoration:none;
+  color:#333;
 }
 </style>
 </head>
-
 <body>
-<div class="container">
 
-<h1 id="title">English Story Learning</h1>
+<h1 id="title">English Story Game</h1>
 
-<div class="lang-buttons">
+<div class="lang">
   <button onclick="setLang('en')">English</button>
   <button onclick="setLang('ja')">日本語</button>
   <button onclick="setLang('ko')">한국어</button>
 </div>
 
 <p id="desc">
-This is a fun English learning site for kids.
-Read a story, listen to it, think, and answer questions.
+Read a story, listen carefully, think, and answer the questions.
+This page is for elementary EFL learners.
 </p>
 
 <div class="story-list">
-  <button onclick="goStory(0)">🐰🐢 The Rabbit and the Turtle</button>
-  <button onclick="goStory(1)">🍑 Momotaro</button>
-</div>
-
+  <a href="story1.html">🐰🐢 The Rabbit and the Turtle</a>
+  <a href="story2.html">🍑 Momotaro</a>
+  <a href="story3.html">🐢 Urashima Taro</a>
+  <a href="story4.html">🕊️ The Grateful Crane</a>
+  <a href="story5.html">🎍 Kasa Jizo</a>
 </div>
 
 <script>
-const texts = {
-  en: {
-    title: "English Story Learning",
-    desc: "This is a fun English learning site for kids. Read a story, listen to it, think, and answer questions."
+const text = {
+  en:{
+    title:"English Story Game",
+    desc:"Read a story, listen carefully, think, and answer the questions. This page is for elementary EFL learners."
   },
-  ja: {
-    title: "えいごストーリー学習",
-    desc: "子ども向けの楽しい英語学習サイトです。ストーリーを読んで、聞いて、考えて、答えましょう。"
+  ja:{
+    title:"英語ストーリーゲーム",
+    desc:"ストーリーを読んで、聞いて、考えて、答える学習ページです。小学生向け英語学習用です。"
   },
-  ko: {
-    title: "영어 스토리 학습",
-    desc: "아이들을 위한 재미있는 영어 학습 사이트입니다. 이야기를 읽고, 듣고, 생각하고, 문제를 풀어보세요."
+  ko:{
+    title:"영어 이야기 게임",
+    desc:"이야기를 읽고, 듣고, 생각하고, 질문에 답하는 영어 학습 페이지입니다."
   }
 };
 
-function setLang(lang) {
-  document.getElementById("title").textContent = texts[lang].title;
-  document.getElementById("desc").textContent = texts[lang].desc;
-}
-
-function goStory(index) {
-  location.href = `story.html?story=${index}`;
+function setLang(l){
+  document.getElementById("title").innerText=text[l].title;
+  document.getElementById("desc").innerText=text[l].desc;
 }
 </script>
 
