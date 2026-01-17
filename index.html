@@ -40,10 +40,19 @@ button {
   border: none;
   border-radius: 8px;
   cursor: pointer;
+  margin-top: 10px;
+}
+
+button.secondary {
+  background: #2196f3;
+}
+
+button.answer {
+  background: #ff9800;
 }
 
 button:hover {
-  background: #43a047;
+  opacity: 0.9;
 }
 
 .question {
@@ -54,6 +63,12 @@ select, input {
   font-size: 16px;
   padding: 8px;
   width: 100%;
+}
+
+.answer-text {
+  font-size: 14px;
+  color: #555;
+  display: none;
 }
 
 .result {
@@ -81,6 +96,9 @@ select, input {
   <div id="questions"></div>
 
   <button onclick="checkAnswers()">✔ Check Answers</button>
+  <button class="answer" onclick="showAnswers()">👀 Show Answers</button>
+  <button class="secondary" onclick="nextStory()">➡ Next Story</button>
+
   <div id="result" class="result"></div>
 </div>
 
@@ -88,45 +106,52 @@ select, input {
 
 <script>
 // =====================
-// STORY DATA (EFL Level)
+// STORY DATA (Extended)
 // =====================
 const stories = [
+
+/* ---------- STORY 1 ---------- */
 {
   title: "🐰🐢 The Rabbit and the Turtle",
-  text: `One day, a rabbit and a turtle meet in the forest.
+  text: `One sunny day, a rabbit and a turtle meet in the forest.
 
-The rabbit is fast.
-He is proud.
+The rabbit is very fast.
+He likes to run and show off.
+He is proud of himself.
 
 The turtle is slow.
-He is calm.
+He walks very slowly.
+But he is calm and patient.
 
-The rabbit says,
-"Let’s race!"
+The rabbit laughs and says,
+"Let’s have a race!"
 
-The turtle says,
-"Okay."
+The turtle thinks for a moment.
+Then he says,
+"Okay. Let’s race."
 
 The race starts.
-
 The rabbit runs very fast.
-He is far in front.
+Soon, he is far in front of the turtle.
 
-He looks back.
-The turtle is far behind.
+The rabbit looks back.
+He sees the turtle far behind.
 
 The rabbit says,
-"I have time."
+"I have a lot of time."
+He sits under a tree and sleeps.
 
-He sleeps under a tree.
-
-The turtle walks slowly.
+The turtle walks step by step.
 He does not stop.
+He walks past the sleeping rabbit.
 
-The turtle walks past the rabbit.
+At the end of the race,
+the turtle reaches the finish line first.
 
-At the end,
-the turtle wins the race.
+The rabbit wakes up and runs fast,
+but it is too late.
+
+The turtle wins the race.
 
 Slow and steady wins the race.`,
   questions: [
@@ -136,19 +161,14 @@ Slow and steady wins the race.`,
       options: ["A rabbit and a turtle", "A dog and a cat"]
     },
     {
-      q: "Who is fast?",
-      a: "The rabbit",
-      options: ["The rabbit", "The turtle"]
+      q: "Why does the rabbit sleep?",
+      a: "He thinks he has time",
+      options: ["He is sick", "He thinks he has time"]
     },
     {
-      q: "Why does the rabbit stop?",
-      a: "He sleeps",
-      options: ["He sleeps", "He is scared"]
-    },
-    {
-      q: "What does the turtle do?",
-      a: "He keeps walking",
-      options: ["He keeps walking", "He sleeps too"]
+      q: "What kind of animal is the turtle?",
+      a: "Calm and patient",
+      options: ["Fast and proud", "Calm and patient"]
     },
     {
       q: "Who wins the race?",
@@ -157,43 +177,103 @@ Slow and steady wins the race.`,
     }
   ],
   grammar: [
+    { q: "The rabbit is fast ____ proud.", a: "and" },
+    { q: "The turtle is slow ____ calm.", a: "but" },
+    { q: "The rabbit sleeps ____ he thinks he has time.", a: "because" }
+  ]
+},
+
+/* ---------- STORY 2 ---------- */
+{
+  title: "🍑 Momotaro (Japanese Fairy Tale)",
+  text: `Long ago, an old man and an old woman live in a small village.
+
+Every day, the old man works outside.
+The old woman works at home.
+
+One day, the old woman goes to the river.
+She sees a big peach in the water.
+
+She takes the peach home.
+When she cuts the peach,
+a baby boy comes out.
+
+They are very surprised and happy.
+They name the boy Momotaro.
+
+Momotaro grows up strong and kind.
+He likes to help people.
+
+One day, Momotaro hears about bad ogres.
+The ogres hurt people in the village.
+
+Momotaro says,
+"I want to help."
+
+He goes on a long trip.
+On the way, he meets a dog, a monkey, and a bird.
+They become good friends.
+
+Together, they fight the ogres.
+They work as a team.
+
+The ogres lose.
+Momotaro and his friends win.
+
+Momotaro comes home safely.
+Everyone is happy.`,
+  questions: [
     {
-      q: "I like apples ____ I don't like bananas.",
-      a: "but"
+      q: "Where do the old man and woman live?",
+      a: "In a small village",
+      options: ["In a city", "In a small village"]
     },
     {
-      q: "She stays at home ____ it is raining.",
-      a: "because"
+      q: "Where does the peach come from?",
+      a: "The river",
+      options: ["The mountain", "The river"]
     },
     {
-      q: "We go to school ____ we study English.",
-      a: "and"
+      q: "Why does Momotaro go on a trip?",
+      a: "To help people",
+      options: ["To find food", "To help people"]
     },
     {
-      q: "He is tired ____ he goes to bed.",
-      a: "because"
-    },
-    {
-      q: "Tom has a dog ____ a cat.",
-      a: "and"
+      q: "Who helps Momotaro?",
+      a: "His friends",
+      options: ["The ogres", "His friends"]
     }
+  ],
+  grammar: [
+    { q: "Momotaro is strong ____ kind.", a: "and" },
+    { q: "He goes on a trip ____ he wants to help people.", a: "because" },
+    { q: "The ogres are bad ____ Momotaro is brave.", a: "but" }
   ]
 }
+
 ];
 
 // =====================
-// LOGIC
+// LOGIC (unchanged)
 // =====================
-let current = stories[0];
+let storyIndex = 0;
 
-document.getElementById("title").textContent = current.title;
-document.getElementById("story").textContent = current.text;
+function loadStory() {
+  const s = stories[storyIndex];
+  document.getElementById("title").textContent = s.title;
+  document.getElementById("story").textContent = s.text;
+  document.getElementById("game").style.display = "none";
+  document.getElementById("result").textContent = "";
+}
+
+loadStory();
 
 function startGame() {
   const area = document.getElementById("questions");
   area.innerHTML = "";
+  const s = stories[storyIndex];
 
-  current.questions.forEach((item, i) => {
+  s.questions.forEach((item, i) => {
     area.innerHTML += `
       <div class="question">
         ${i + 1}. ${item.q}
@@ -201,16 +281,18 @@ function startGame() {
           <option value="">-- choose --</option>
           ${item.options.map(o => `<option>${o}</option>`).join("")}
         </select>
+        <div class="answer-text">Answer: ${item.a}</div>
       </div>`;
   });
 
   area.innerHTML += `<h2>Grammar Practice</h2>`;
 
-  current.grammar.forEach((item, i) => {
+  s.grammar.forEach(item => {
     area.innerHTML += `
       <div class="question">
         ${item.q}
         <input data-answer="${item.a}">
+        <div class="answer-text">Answer: ${item.a}</div>
       </div>`;
   });
 
@@ -229,8 +311,19 @@ function checkAnswers() {
 
   const result = document.getElementById("result");
   result.textContent = `Score: ${score} / ${inputs.length}`;
-
   result.className = "result " + (score >= inputs.length * 0.7 ? "correct" : "wrong");
+}
+
+function showAnswers() {
+  document.querySelectorAll(".answer-text").forEach(el => {
+    el.style.display = "block";
+  });
+}
+
+function nextStory() {
+  storyIndex++;
+  if (storyIndex >= stories.length) storyIndex = 0;
+  loadStory();
 }
 </script>
 
