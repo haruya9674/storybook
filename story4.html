@@ -22,67 +22,80 @@ button{background:#4CAF50;color:white;border:none;padding:10px 16px;border-radiu
 <button onclick="speak()">🔊 Listen story</button>
 
 <div class="story" id="story">
-One cold day, a poor man found an injured crane.
+One cold winter day, a poor man found a crane in the snow.
+The crane was hurt and could not fly.
 
-He helped the crane and set it free.
-That night, a woman came to his house.
+The man helped the crane and let it go.
+That night, a young woman came to his house.
+She said she had no home, so the man let her stay.
 
-She stayed with him and made beautiful cloth.
-She said, “Please do not look while I work.”
+The woman worked hard and made beautiful cloth.
+She said, “Please do not look while I am working.”
 
-The man became curious and looked inside.
-The woman was the crane.
+The man became curious.
+He looked inside the room and saw a crane.
+The woman flew away and never came back.
 
-She flew away and never returned.
+The man felt sad.
 </div>
 
 <div class="quiz">
 <h3>Quiz A – Choose (5)</h3>
 
-<p>1. Who did the man help?</p>
-<label><input type="radio" name="q1" value="1">A crane</label><br>
-<label><input type="radio" name="q1" value="0">A dog</label><br>
+<p>1. Where did the man find the crane?</p>
+<label><input type="radio" name="q1" value="1">In the snow</label><br>
+<label><input type="radio" name="q1" value="0">In the river</label><br>
+<div id="r1"></div>
 
-<p>2. What did the woman make?</p>
-<label><input type="radio" name="q2" value="1">Cloth</label><br>
-<label><input type="radio" name="q2" value="0">Shoes</label><br>
+<p>2. What was wrong with the crane?</p>
+<label><input type="radio" name="q2" value="1">It was hurt</label><br>
+<label><input type="radio" name="q2" value="0">It was hungry</label><br>
+<div id="r2"></div>
 
-<p>3. What promise did she ask?</p>
-<label><input type="radio" name="q3" value="1">Do not look</label><br>
-<label><input type="radio" name="q3" value="0">Do not leave</label><br>
+<p>3. What did the woman make?</p>
+<label><input type="radio" name="q3" value="1">Cloth</label><br>
+<label><input type="radio" name="q3" value="0">Shoes</label><br>
+<div id="r3"></div>
 
-<p>4. What did the man do?</p>
-<label><input type="radio" name="q4" value="1">He looked</label><br>
-<label><input type="radio" name="q4" value="0">He slept</label><br>
+<p>4. What promise did she ask?</p>
+<label><input type="radio" name="q4" value="1">Do not look</label><br>
+<label><input type="radio" name="q4" value="0">Do not leave</label><br>
+<div id="r4"></div>
 
-<p>5. What happened at the end?</p>
-<label><input type="radio" name="q5" value="1">The crane flew away</label><br>
-<label><input type="radio" name="q5" value="0">They lived together</label><br>
+<p>5. What did the man do?</p>
+<label><input type="radio" name="q5" value="1">He looked</label><br>
+<label><input type="radio" name="q5" value="0">He waited</label><br>
+<div id="r5"></div>
 
 <h3>Quiz B – Choose (5)</h3>
 
-<p>6. Why did the crane come back?</p>
-<label><input type="radio" name="q6" value="1">To say thank you</label><br>
-<label><input type="radio" name="q6" value="0">To take food</label><br>
+<p>6. Who was the woman?</p>
+<label><input type="radio" name="q6" value="1">The crane</label><br>
+<label><input type="radio" name="q6" value="0">A villager</label><br>
+<div id="r6"></div>
 
-<p>7. Who was the woman?</p>
-<label><input type="radio" name="q7" value="1">The crane</label><br>
-<label><input type="radio" name="q7" value="0">A villager</label><br>
+<p>7. Why did the crane come back?</p>
+<label><input type="radio" name="q7" value="1">To say thank you</label><br>
+<label><input type="radio" name="q7" value="0">To get food</label><br>
+<div id="r7"></div>
 
 <p>8. What did the man break?</p>
 <label><input type="radio" name="q8" value="1">A promise</label><br>
-<label><input type="radio" name="q8" value="0">A chair</label><br>
+<label><input type="radio" name="q8" value="0">A door</label><br>
+<div id="r8"></div>
 
-<p>9. How did the crane feel?</p>
+<p>9. How did the man feel at the end?</p>
 <label><input type="radio" name="q9" value="1">Sad</label><br>
-<label><input type="radio" name="q9" value="0">Angry</label><br>
+<label><input type="radio" name="q9" value="0">Happy</label><br>
+<div id="r9"></div>
 
 <p>10. What is the lesson?</p>
 <label><input type="radio" name="q10" value="1">Keep promises</label><br>
-<label><input type="radio" name="q10" value="0">Be rich</label><br>
+<label><input type="radio" name="q10" value="0">Be curious</label><br>
+<div id="r10"></div>
 
 <button onclick="check()">Check Answer</button>
-<div id="result"></div>
+<div id="score"></div>
 </div>
 
 <br>
@@ -97,16 +110,16 @@ function speak(){
  speechSynthesis.speak(u);
 }
 function stopVoice(){speechSynthesis.cancel();}
+
 function check(){
  let score=0;
- let html="";
  for(let i=1;i<=10;i++){
   const q=document.querySelector(`input[name="q${i}"]:checked`);
-  if(q && q.value==="1"){score++; html+=`<p class="correct">Q${i}: Correct</p>`;}
-  else html+=`<p class="wrong">Q${i}: Wrong</p>`;
+  const r=document.getElementById("r"+i);
+  if(q && q.value==="1"){r.innerHTML='<span class="correct">Correct</span>'; score++;}
+  else r.innerHTML='<span class="wrong">Wrong</span>';
  }
- html+=`<p class="score">Score: ${score} / 10</p>`;
- result.innerHTML=html;
+ scoreDiv.innerHTML=`<p class="score">Score: ${score} / 10</p>`;
 }
 </script>
 
