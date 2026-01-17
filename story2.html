@@ -5,12 +5,40 @@
 <title>Momotaro</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
-body{font-family:system-ui;background:#f5f7fb;padding:20px;}
+body{
+  font-family:system-ui,sans-serif;
+  background:#f5f7fb;
+  padding:20px;
+}
 h2{color:#2e7d32;}
-button{background:#4CAF50;color:white;border:none;padding:10px 16px;border-radius:6px;margin:8px 0;}
-.story{background:white;border-left:6px solid #4CAF50;padding:16px;border-radius:8px;white-space:pre-line;}
-.quiz{background:white;margin-top:20px;padding:16px;border-radius:8px;}
-.score{font-weight:bold;margin-top:10px;}
+button{
+  background:#4CAF50;
+  color:white;
+  border:none;
+  padding:10px 16px;
+  border-radius:6px;
+  margin:8px 0;
+}
+.story{
+  background:white;
+  border-left:6px solid #4CAF50;
+  padding:16px;
+  border-radius:8px;
+  white-space:pre-line;
+}
+.quiz{
+  background:white;
+  margin-top:20px;
+  padding:16px;
+  border-radius:8px;
+}
+.correct{color:green;font-weight:bold;}
+.wrong{color:red;font-weight:bold;}
+.score{
+  font-weight:bold;
+  margin-top:10px;
+  font-size:18px;
+}
 </style>
 </head>
 
@@ -20,51 +48,98 @@ button{background:#4CAF50;color:white;border:none;padding:10px 16px;border-radiu
 <button onclick="speak()">🔊 Listen story</button>
 
 <div class="story" id="story">
-Long ago, an old man and an old woman lived in a small village.
+Long ago, an old man and an old woman lived in a quiet village.
 
-One day, the old woman found a big peach in the river.
-Inside the peach was a baby boy.
-They named him Momotaro.
+One day, the old woman was washing clothes in the river.
+She saw a very big peach floating toward her.
+She took it home to show her husband.
 
-Momotaro grew strong and kind.
-One day, he went to fight the ogres.
+When they cut the peach, a baby boy came out.
+They were very surprised and happy.
+They named the boy Momotaro.
 
-On the way, he met a dog, a monkey, and a bird.
-They became friends and helped him.
+Momotaro grew up strong, brave, and kind.
+He loved to help people in the village.
 
-Together, they won the battle.
-Momotaro returned home safely.
+One day, Momotaro heard about scary ogres on a far island.
+He decided to go and stop them.
+
+On his journey, he met a dog, a monkey, and a bird.
+They became friends and worked together.
+
+With teamwork and courage, they defeated the ogres.
+Momotaro returned home safely and happily.
 </div>
 
 <div class="quiz">
 <h3>Quiz A – Choose (5)</h3>
 
 <p>1. Where did the old woman find the peach?</p>
-<input type="radio" name="q1" value="1">In the river<br>
-<input type="radio" name="q1" value="0">In the forest<br>
+<label><input type="radio" name="q1" value="1"> In the river</label><br>
+<label><input type="radio" name="q1" value="0"> In the forest</label>
+<div id="r1"></div>
 
-<p>2. Who was inside the peach?</p>
-<input type="radio" name="q2" value="1">A baby boy<br>
-<input type="radio" name="q2" value="0">A dog<br>
+<p>2. Who came out of the peach?</p>
+<label><input type="radio" name="q2" value="1"> A baby boy</label><br>
+<label><input type="radio" name="q2" value="0"> A dog</label>
+<div id="r2"></div>
 
-<p>3. Who did Momotaro fight?</p>
-<input type="radio" name="q3" value="1">Ogres<br>
-<input type="radio" name="q3" value="0">Dragons<br>
+<p>3. What kind of boy was Momotaro?</p>
+<label><input type="radio" name="q3" value="1"> Strong and kind</label><br>
+<label><input type="radio" name="q3" value="0"> Lazy and weak</label>
+<div id="r3"></div>
 
-<p>4. Who helped Momotaro?</p>
-<input type="radio" name="q4" value="1">Dog, monkey, bird<br>
-<input type="radio" name="q4" value="0">Cat and fish<br>
+<p>4. Who did Momotaro fight?</p>
+<label><input type="radio" name="q4" value="1"> Ogres</label><br>
+<label><input type="radio" name="q4" value="0"> Giants</label>
+<div id="r4"></div>
 
 <p>5. How did the story end?</p>
-<input type="radio" name="q5" value="1">He returned home safely<br>
-<input type="radio" name="q5" value="0">He lost the fight<br>
+<label><input type="radio" name="q5" value="1"> He returned home safely</label><br>
+<label><input type="radio" name="q5" value="0"> He stayed on the island</label>
+<div id="r5"></div>
 
-<h3>Quiz B – Write (5)</h3>
-1. Who lived in the village?<br><input id="w1"><br>
-2. What did Momotaro grow to be?<br><input id="w2"><br>
-3. Where did the peach come from?<br><input id="w3"><br>
-4. Who became Momotaro’s friends?<br><input id="w4"><br>
-5. What lesson do you learn?<br><input id="w5"><br>
+<h3>Quiz B – Choose (5)</h3>
+
+<p>6. Who lived in the village?</p>
+<select id="w1">
+  <option value="">-- choose --</option>
+  <option value="1">An old man and an old woman</option>
+  <option value="0">A king and a queen</option>
+</select>
+<div id="r6"></div>
+
+<p>7. Where was the peach?</p>
+<select id="w2">
+  <option value="">-- choose --</option>
+  <option value="1">In the river</option>
+  <option value="0">On a mountain</option>
+</select>
+<div id="r7"></div>
+
+<p>8. Who became Momotaro’s friends?</p>
+<select id="w3">
+  <option value="">-- choose --</option>
+  <option value="1">Dog, monkey, and bird</option>
+  <option value="0">Cat and fish</option>
+</select>
+<div id="r8"></div>
+
+<p>9. Why did Momotaro go on a journey?</p>
+<select id="w4">
+  <option value="">-- choose --</option>
+  <option value="1">To fight the ogres</option>
+  <option value="0">To find treasure</option>
+</select>
+<div id="r9"></div>
+
+<p>10. What is the lesson of the story?</p>
+<select id="w5">
+  <option value="">-- choose --</option>
+  <option value="1">Teamwork and kindness are important</option>
+  <option value="0">Being alone is best</option>
+</select>
+<div id="r10"></div>
 
 <button onclick="check()">Check Answer</button>
 <div id="result"></div>
@@ -76,23 +151,41 @@ Momotaro returned home safely.
 
 <script>
 function speak(){
- stopVoice();
- const u=new SpeechSynthesisUtterance(story.innerText);
- u.lang="en-US";u.rate=0.5;u.pitch=1.2;
- speechSynthesis.speak(u);
+  stopVoice();
+  const u=new SpeechSynthesisUtterance(story.innerText);
+  u.lang="en-US";
+  u.rate=0.45;
+  u.pitch=1.2;
+  speechSynthesis.speak(u);
 }
-function stopVoice(){speechSynthesis.cancel();}
+function stopVoice(){
+  speechSynthesis.cancel();
+}
+
+function mark(id, ok, answer){
+  document.getElementById(id).innerHTML =
+    ok ? `<span class="correct">✔ Correct</span>`
+       : `<span class="wrong">✖ Wrong – ${answer}</span>`;
+}
+
 function check(){
- let score=0;
- for(let i=1;i<=5;i++){
-  const q=document.querySelector(`input[name="q${i}"]:checked`);
-  if(q && q.value==="1") score++;
- }
- const keys=["old man","strong","river","dog","help"];
- keys.forEach((k,i)=>{
-  if(document.getElementById("w"+(i+1)).value.toLowerCase().includes(k)) score++;
- });
- result.innerHTML=`<p class="score">Score: ${score} / 10</p>`;
+  let score=0;
+
+  for(let i=1;i<=5;i++){
+    const q=document.querySelector(`input[name="q${i}"]:checked`);
+    const ok=q && q.value==="1";
+    if(ok) score++;
+    mark("r"+i, ok, "Correct choice");
+  }
+
+  for(let i=1;i<=5;i++){
+    const sel=document.getElementById("w"+i);
+    const ok=sel.value==="1";
+    if(ok) score++;
+    mark("r"+(i+5), ok, sel.options[sel.selectedIndex]?.text || "Correct answer");
+  }
+
+  result.innerHTML=`<p class="score">Score: ${score} / 10</p>`;
 }
 </script>
 
