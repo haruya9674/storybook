@@ -22,63 +22,74 @@ button{background:#4CAF50;color:white;border:none;padding:10px 16px;border-radiu
 <button onclick="speak()">🔊 Listen story</button>
 
 <div class="story" id="story">
-One snowy day, an old man went to sell hats.
-No one bought them.
+One snowy day, an old man went to town to sell hats.
+No one bought them, so he went home sadly.
 
-On the way home, he saw Jizo statues in the snow.
-He gave them hats to keep them warm.
+On the way, he saw Jizo statues covered in snow.
+He felt sorry for them.
+He gave his hats to the statues to keep them warm.
 
 That night, many gifts came to his house.
-Kindness brought happiness.
+The old man and his wife were very happy.
 </div>
 
 <div class="quiz">
 <h3>Quiz A – Choose (5)</h3>
 
-<p>1. Who gave the hats?</p>
-<label><input type="radio" name="q1" value="1">An old man</label><br>
-<label><input type="radio" name="q1" value="0">A child</label><br>
+<p>1. What was the weather?</p>
+<label><input type="radio" name="q1" value="1">Snowy</label><br>
+<label><input type="radio" name="q1" value="0">Rainy</label><br>
+<div id="r1"></div>
 
-<p>2. What was the weather?</p>
-<label><input type="radio" name="q2" value="1">Snowy</label><br>
-<label><input type="radio" name="q2" value="0">Sunny</label><br>
+<p>2. What did the old man sell?</p>
+<label><input type="radio" name="q2" value="1">Hats</label><br>
+<label><input type="radio" name="q2" value="0">Shoes</label><br>
+<div id="r2"></div>
 
-<p>3. What did he give?</p>
-<label><input type="radio" name="q3" value="1">Hats</label><br>
-<label><input type="radio" name="q3" value="0">Food</label><br>
+<p>3. Who did he meet?</p>
+<label><input type="radio" name="q3" value="1">Jizo statues</label><br>
+<label><input type="radio" name="q3" value="0">Children</label><br>
+<div id="r3"></div>
 
-<p>4. What were the statues?</p>
-<label><input type="radio" name="q4" value="1">Jizo statues</label><br>
-<label><input type="radio" name="q4" value="0">Animals</label><br>
+<p>4. What did he give them?</p>
+<label><input type="radio" name="q4" value="1">Hats</label><br>
+<label><input type="radio" name="q4" value="0">Food</label><br>
+<div id="r4"></div>
 
-<p>5. What came at night?</p>
-<label><input type="radio" name="q5" value="1">Gifts</label><br>
-<label><input type="radio" name="q5" value="0">Snow</label><br>
+<p>5. How did he feel?</p>
+<label><input type="radio" name="q5" value="1">Kind</label><br>
+<label><input type="radio" name="q5" value="0">Angry</label><br>
+<div id="r5"></div>
 
 <h3>Quiz B – Choose (5)</h3>
 
-<p>6. Why did he give hats?</p>
+<p>6. Why did he give the hats?</p>
 <label><input type="radio" name="q6" value="1">To keep them warm</label><br>
 <label><input type="radio" name="q6" value="0">To sell them</label><br>
+<div id="r6"></div>
 
 <p>7. What were the statues made of?</p>
 <label><input type="radio" name="q7" value="1">Stone</label><br>
 <label><input type="radio" name="q7" value="0">Wood</label><br>
+<div id="r7"></div>
 
-<p>8. How did the old man feel?</p>
-<label><input type="radio" name="q8" value="1">Kind</label><br>
-<label><input type="radio" name="q8" value="0">Greedy</label><br>
+<p>8. What came at night?</p>
+<label><input type="radio" name="q8" value="1">Gifts</label><br>
+<label><input type="radio" name="q8" value="0">Snow</label><br>
+<div id="r8"></div>
 
-<p>9. What did the old man receive?</p>
-<label><input type="radio" name="q9" value="1">Food and clothes</label><br>
-<label><input type="radio" name="q9" value="0">Money</label><br>
+<p>9. Who was happy?</p>
+<label><input type="radio" name="q9" value="1">The old man and his wife</label><br>
+<label><input type="radio" name="q9" value="0">The villagers</label><br>
+<div id="r9"></div>
 
 <p>10. What is the lesson?</p>
 <label><input type="radio" name="q10" value="1">Kindness brings happiness</label><br>
-<label><input type="radio" name="q10" value="0">Always sell hats</label><br>
+<label><input type="radio" name="q10" value="0">Money is important</label><br>
+<div id="r10"></div>
 
 <button onclick="check()">Check Answer</button>
-<div id="result"></div>
+<div id="score"></div>
 </div>
 
 <br>
@@ -92,16 +103,16 @@ function speak(){
  speechSynthesis.speak(u);
 }
 function stopVoice(){speechSynthesis.cancel();}
+
 function check(){
  let score=0;
- let html="";
  for(let i=1;i<=10;i++){
   const q=document.querySelector(`input[name="q${i}"]:checked`);
-  if(q && q.value==="1"){score++; html+=`<p class="correct">Q${i}: Correct</p>`;}
-  else html+=`<p class="wrong">Q${i}: Wrong</p>`;
+  const r=document.getElementById("r"+i);
+  if(q && q.value==="1"){r.innerHTML='<span class="correct">Correct</span>'; score++;}
+  else r.innerHTML='<span class="wrong">Wrong</span>';
  }
- html+=`<p class="score">Score: ${score} / 10</p>`;
- result.innerHTML=html;
+ score.innerHTML=`<p class="score">Score: ${score} / 10</p>`;
 }
 </script>
 
