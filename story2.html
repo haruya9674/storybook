@@ -5,25 +5,30 @@
 <title>Momotaro</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
-body{font-family:system-ui;padding:20px;}
-.story{background:#f7f9fc;padding:16px;border-radius:10px;}
-.answer{display:none;background:#eef;padding:10px;margin-top:10px;}
+body{font-family:system-ui;background:#f5f7fb;padding:20px;}
+h2{color:#2e7d32;}
+button{background:#4CAF50;color:white;border:none;padding:10px 16px;border-radius:6px;margin:8px 0;}
+.story{background:white;border-left:6px solid #4CAF50;padding:16px;border-radius:8px;white-space:pre-line;}
+.quiz{background:white;margin-top:20px;padding:16px;border-radius:8px;}
+.score{font-weight:bold;margin-top:10px;}
 </style>
 </head>
 
 <body onbeforeunload="stopVoice()">
 
-<h2>Momotaro</h2>
-<button onclick="speak()">🔊 Listen Slowly</button>
+<h2>🍑 Momotaro</h2>
+<button onclick="speak()">🔊 Listen story</button>
 
 <div class="story" id="story">
-Long ago, an old man and an old woman lived in a village.
+Long ago, an old man and an old woman lived in a small village.
+
 One day, the old woman found a big peach in the river.
 Inside the peach was a baby boy.
 They named him Momotaro.
 
 Momotaro grew strong and kind.
 One day, he went to fight the ogres.
+
 On the way, he met a dog, a monkey, and a bird.
 They became friends and helped him.
 
@@ -31,35 +36,64 @@ Together, they won the battle.
 Momotaro returned home safely.
 </div>
 
-<h3>Quiz 1 (Choose)</h3>
-Who helped Momotaro?<br>
-<input type="radio" name="q1">A cat<br>
-<input type="radio" name="q1">A fish<br>
-<input type="radio" name="q1">A dog, a monkey, and a bird<br>
+<div class="quiz">
+<h3>Quiz A – Choose (5)</h3>
 
-<h3>Quiz 2 (Write)</h3>
-Where was Momotaro found?<br>
-<input type="text">
+<p>1. Where did the old woman find the peach?</p>
+<input type="radio" name="q1" value="1">In the river<br>
+<input type="radio" name="q1" value="0">In the forest<br>
 
-<button onclick="show()">Check</button>
-<div class="answer" id="ans">
-Quiz 1: A dog, a monkey, and a bird<br>
-Quiz 2: In a peach / In the peach.
+<p>2. Who was inside the peach?</p>
+<input type="radio" name="q2" value="1">A baby boy<br>
+<input type="radio" name="q2" value="0">A dog<br>
+
+<p>3. Who did Momotaro fight?</p>
+<input type="radio" name="q3" value="1">Ogres<br>
+<input type="radio" name="q3" value="0">Dragons<br>
+
+<p>4. Who helped Momotaro?</p>
+<input type="radio" name="q4" value="1">Dog, monkey, bird<br>
+<input type="radio" name="q4" value="0">Cat and fish<br>
+
+<p>5. How did the story end?</p>
+<input type="radio" name="q5" value="1">He returned home safely<br>
+<input type="radio" name="q5" value="0">He lost the fight<br>
+
+<h3>Quiz B – Write (5)</h3>
+1. Who lived in the village?<br><input id="w1"><br>
+2. What did Momotaro grow to be?<br><input id="w2"><br>
+3. Where did the peach come from?<br><input id="w3"><br>
+4. Who became Momotaro’s friends?<br><input id="w4"><br>
+5. What lesson do you learn?<br><input id="w5"><br>
+
+<button onclick="check()">Check Answer</button>
+<div id="result"></div>
 </div>
 
 <br>
-<a href="story3.html" onclick="stopVoice()">➡ Next</a> |
+<a href="story3.html" onclick="stopVoice()">➡ Next story</a> |
 <a href="index.html" onclick="stopVoice()">Home</a>
 
 <script>
 function speak(){
  stopVoice();
  const u=new SpeechSynthesisUtterance(story.innerText);
- u.lang="en-US";u.rate=0.55;u.pitch=1.2;
+ u.lang="en-US";u.rate=0.5;u.pitch=1.2;
  speechSynthesis.speak(u);
 }
 function stopVoice(){speechSynthesis.cancel();}
-function show(){ans.style.display="block";}
+function check(){
+ let score=0;
+ for(let i=1;i<=5;i++){
+  const q=document.querySelector(`input[name="q${i}"]:checked`);
+  if(q && q.value==="1") score++;
+ }
+ const keys=["old man","strong","river","dog","help"];
+ keys.forEach((k,i)=>{
+  if(document.getElementById("w"+(i+1)).value.toLowerCase().includes(k)) score++;
+ });
+ result.innerHTML=`<p class="score">Score: ${score} / 10</p>`;
+}
 </script>
 
 </body>
