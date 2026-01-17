@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>The Grateful Crane</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body{font-family:system-ui;padding:20px;}
+.story{background:#f7f9fc;padding:16px;border-radius:10px;}
+.answer{display:none;background:#eef;padding:10px;margin-top:10px;}
+</style>
+</head>
+
+<body onbeforeunload="stopVoice()">
+
+<h2>The Grateful Crane</h2>
+<button onclick="speak()">🔊 Listen Slowly</button>
+
+<div class="story" id="story">
+One day, a man helped an injured crane.
+Later, a woman came to his house.
+She made beautiful cloth for him.
+
+She said, “Please do not look.”
+The man looked inside the room.
+The crane flew away and never returned.
+</div>
+
+<h3>Quiz 1 (Choose)</h3>
+Why did the crane leave?<br>
+<input type="radio" name="q1">She was tired<br>
+<input type="radio" name="q1">The man broke the promise<br>
+<input type="radio" name="q1">She found a new home<br>
+
+<h3>Quiz 2 (Write)</h3>
+What lesson did this story teach?<br>
+<input type="text">
+
+<button onclick="show()">Check</button>
+<div class="answer" id="ans">
+Quiz 1: The man broke the promise<br>
+Quiz 2: Keep promises / Be honest.
+</div>
+
+<br>
+<a href="story5.html" onclick="stopVoice()">➡ Next</a> |
+<a href="index.html" onclick="stopVoice()">Home</a>
+
+<script>
+function speak(){
+ stopVoice();
+ const u=new SpeechSynthesisUtterance(story.innerText);
+ u.lang="en-US";u.rate=0.55;u.pitch=1.2;
+ speechSynthesis.speak(u);
+}
+function stopVoice(){speechSynthesis.cancel();}
+function show(){ans.style.display="block";}
+</script>
+
+</body>
+</html>
