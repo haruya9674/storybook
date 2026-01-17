@@ -5,57 +5,92 @@
 <title>Urashima Taro</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
-body{font-family:system-ui;padding:20px;}
-.story{background:#f7f9fc;padding:16px;border-radius:10px;}
-.answer{display:none;background:#eef;padding:10px;margin-top:10px;}
+body{font-family:system-ui;background:#f5f7fb;padding:20px;}
+h2{color:#2e7d32;}
+button{background:#4CAF50;color:white;border:none;padding:10px 16px;border-radius:6px;margin:8px 0;}
+.story{background:white;border-left:6px solid #4CAF50;padding:16px;border-radius:8px;white-space:pre-line;}
+.quiz{background:white;margin-top:20px;padding:16px;border-radius:8px;}
+.score{font-weight:bold;margin-top:10px;}
 </style>
 </head>
 
 <body onbeforeunload="stopVoice()">
 
-<h2>Urashima Taro</h2>
-<button onclick="speak()">🔊 Listen Slowly</button>
+<h2>🐢 Urashima Taro</h2>
+<button onclick="speak()">🔊 Listen story</button>
 
 <div class="story" id="story">
 Urashima Taro was a kind fisherman.
+
 One day, he saved a turtle on the beach.
 The turtle took him to the sea palace.
 
-Urashima stayed there and had fun.
-When he returned home, many years had passed.
+Urashima stayed there and enjoyed his time.
+After a while, he returned home.
+
+But many years had passed.
 He opened a box from the turtle.
 Suddenly, he became very old.
 </div>
 
-<h3>Quiz 1 (Choose)</h3>
-Who did Urashima save?<br>
-<input type="radio" name="q1">A bird<br>
-<input type="radio" name="q1">A turtle<br>
-<input type="radio" name="q1">A dog<br>
+<div class="quiz">
+<h3>Quiz A – Choose (5)</h3>
 
-<h3>Quiz 2 (Write)</h3>
-What happened when he opened the box?<br>
-<input type="text">
+<p>1. What was Urashima’s job?</p>
+<input type="radio" name="q1" value="1">Fisherman<br>
+<input type="radio" name="q1" value="0">Farmer<br>
 
-<button onclick="show()">Check</button>
-<div class="answer" id="ans">
-Quiz 1: A turtle<br>
-Quiz 2: He became old.
+<p>2. Who did he save?</p>
+<input type="radio" name="q2" value="1">A turtle<br>
+<input type="radio" name="q2" value="0">A bird<br>
+
+<p>3. Where did the turtle take him?</p>
+<input type="radio" name="q3" value="1">Sea palace<br>
+<input type="radio" name="q3" value="0">Mountain<br>
+
+<p>4. What did he open?</p>
+<input type="radio" name="q4" value="1">A box<br>
+<input type="radio" name="q4" value="0">A bag<br>
+
+<p>5. What happened to Urashima?</p>
+<input type="radio" name="q5" value="1">He became old<br>
+<input type="radio" name="q5" value="0">He became rich<br>
+
+<h3>Quiz B – Write (5)</h3>
+1. Where did he meet the turtle?<br><input id="w1"><br>
+2. Who took him to the palace?<br><input id="w2"><br>
+3. What gift did he get?<br><input id="w3"><br>
+4. What happened when he came back?<br><input id="w4"><br>
+5. What lesson do you learn?<br><input id="w5"><br>
+
+<button onclick="check()">Check Answer</button>
+<div id="result"></div>
 </div>
 
 <br>
-<a href="story4.html" onclick="stopVoice()">➡ Next</a> |
+<a href="story4.html" onclick="stopVoice()">➡ Next story</a> |
 <a href="index.html" onclick="stopVoice()">Home</a>
 
 <script>
 function speak(){
  stopVoice();
  const u=new SpeechSynthesisUtterance(story.innerText);
- u.lang="en-US";u.rate=0.55;u.pitch=1.2;
+ u.lang="en-US";u.rate=0.5;u.pitch=1.2;
  speechSynthesis.speak(u);
 }
 function stopVoice(){speechSynthesis.cancel();}
-function show(){ans.style.display="block";}
+function check(){
+ let score=0;
+ for(let i=1;i<=5;i++){
+  const q=document.querySelector(`input[name="q${i}"]:checked`);
+  if(q && q.value==="1") score++;
+ }
+ const keys=["beach","turtle","box","years","old"];
+ keys.forEach((k,i)=>{
+  if(document.getElementById("w"+(i+1)).value.toLowerCase().includes(k)) score++;
+ });
+ result.innerHTML=`<p class="score">Score: ${score} / 10</p>`;
+}
 </script>
 
 </body>
