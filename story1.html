@@ -32,11 +32,12 @@ button{
   padding:16px;
   border-radius:8px;
 }
-.correct{color:green;}
-.wrong{color:red;}
+.correct{color:green;font-weight:bold;}
+.wrong{color:red;font-weight:bold;}
 .score{
   font-weight:bold;
   margin-top:10px;
+  font-size:18px;
 }
 </style>
 </head>
@@ -67,34 +68,73 @@ Slow and steady wins the race.
 <h3>Quiz A – Choose (5)</h3>
 
 <p>1. Who were in the race?</p>
-<input type="radio" name="q1" value="0">Two rabbits<br>
-<input type="radio" name="q1" value="1">A rabbit and a turtle<br>
+<label><input type="radio" name="q1" value="0"> Two rabbits</label><br>
+<label><input type="radio" name="q1" value="1"> A rabbit and a turtle</label>
+<div id="r1"></div>
 
 <p>2. Who was fast?</p>
-<input type="radio" name="q2" value="1">The rabbit<br>
-<input type="radio" name="q2" value="0">The turtle<br>
+<label><input type="radio" name="q2" value="1"> The rabbit</label><br>
+<label><input type="radio" name="q2" value="0"> The turtle</label>
+<div id="r2"></div>
 
 <p>3. Why did the rabbit lose?</p>
-<input type="radio" name="q3" value="1">He slept<br>
-<input type="radio" name="q3" value="0">He was slow<br>
+<label><input type="radio" name="q3" value="1"> He slept</label><br>
+<label><input type="radio" name="q3" value="0"> He was slow</label>
+<div id="r3"></div>
 
 <p>4. Who did not stop?</p>
-<input type="radio" name="q4" value="1">The turtle<br>
-<input type="radio" name="q4" value="0">The rabbit<br>
+<label><input type="radio" name="q4" value="1"> The turtle</label><br>
+<label><input type="radio" name="q4" value="0"> The rabbit</label>
+<div id="r4"></div>
 
 <p>5. Who won the race?</p>
-<input type="radio" name="q5" value="1">The turtle<br>
-<input type="radio" name="q5" value="0">The rabbit<br>
+<label><input type="radio" name="q5" value="1"> The turtle</label><br>
+<label><input type="radio" name="q5" value="0"> The rabbit</label>
+<div id="r5"></div>
 
-<h3>Quiz B – Write (5)</h3>
-1. Where did they meet?<br><input id="w1"><br>
-2. What did the rabbit do under the tree?<br><input id="w2"><br>
-3. How did the turtle walk?<br><input id="w3"><br>
-4. Who reached the finish line first?<br><input id="w4"><br>
-5. What is the lesson of the story?<br><input id="w5"><br>
+<h3>Quiz B – Choose (5)</h3>
+
+<p>6. Where did they meet?</p>
+<select id="w1">
+  <option value="">-- choose --</option>
+  <option value="0">In the city</option>
+  <option value="1">In the forest</option>
+</select>
+<div id="r6"></div>
+
+<p>7. What did the rabbit do under the tree?</p>
+<select id="w2">
+  <option value="">-- choose --</option>
+  <option value="1">He slept</option>
+  <option value="0">He ate</option>
+</select>
+<div id="r7"></div>
+
+<p>8. How did the turtle walk?</p>
+<select id="w3">
+  <option value="">-- choose --</option>
+  <option value="1">Slowly</option>
+  <option value="0">Very fast</option>
+</select>
+<div id="r8"></div>
+
+<p>9. Who reached the finish line first?</p>
+<select id="w4">
+  <option value="">-- choose --</option>
+  <option value="1">The turtle</option>
+  <option value="0">The rabbit</option>
+</select>
+<div id="r9"></div>
+
+<p>10. What is the lesson of the story?</p>
+<select id="w5">
+  <option value="">-- choose --</option>
+  <option value="1">Slow and steady wins the race</option>
+  <option value="0">Fast is always best</option>
+</select>
+<div id="r10"></div>
 
 <button onclick="check()">Check Answer</button>
-
 <div id="result"></div>
 </div>
 
@@ -107,26 +147,41 @@ function speak(){
   stopVoice();
   const u=new SpeechSynthesisUtterance(story.innerText);
   u.lang="en-US";
-  u.rate=0.5;
+  u.rate=0.45;
   u.pitch=1.2;
   speechSynthesis.speak(u);
 }
 function stopVoice(){
   speechSynthesis.cancel();
 }
+
+function mark(id, ok, answer){
+  document.getElementById(id).innerHTML =
+    ok ? `<span class="correct">✔ Correct</span>`
+       : `<span class="wrong">✖ Wrong – ${answer}</span>`;
+}
+
 function check(){
   let score=0;
+
   for(let i=1;i<=5;i++){
     const q=document.querySelector(`input[name="q${i}"]:checked`);
-    if(q && q.value==="1") score++;
+    const correct = q && q.value==="1";
+    if(correct) score++;
+    mark("r"+i, correct, "Correct choice");
   }
-  const answers=[
+
+  const correctSelects=[
     "forest","slept","slowly","turtle","slow and steady"
   ];
-  answers.forEach((a,i)=>{
-    if(document.getElementById("w"+(i+1)).value.toLowerCase().includes(a))
-      score++;
-  });
+
+  for(let i=1;i<=5;i++){
+    const sel=document.getElementById("w"+i);
+    const ok=sel.value==="1";
+    if(ok) score++;
+    mark("r"+(i+5), ok, sel.options[sel.selectedIndex]?.text || "Correct answer");
+  }
+
   result.innerHTML=`<p class="score">Score: ${score} / 10</p>`;
 }
 </script>
