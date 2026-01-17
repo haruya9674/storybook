@@ -20,44 +20,54 @@ button{background:#4CAF50;color:white;border:none;padding:10px 16px;border-radiu
 <button onclick="speak()">🔊 Listen story</button>
 
 <div class="story" id="story">
-One snowy day, an old man met stone statues.
+Long ago, an old man and an old woman lived in a small village.
 
-He gave them hats to keep them warm.
-That night, gifts came to his house.
+One snowy day, the old man went to town to sell hats.
+But no one bought them.
+On his way home, he saw six stone Jizo statues covered with snow.
 
-The old man was happy.
-Kindness brings happiness.
+The old man felt sorry for them.
+He gave his hats to the statues to keep them warm.
+For the last statue, he used his own scarf.
+
+That night, the old man and woman heard strange sounds.
+When they woke up, many gifts were in their house.
+
+There was food, rice, and warm clothes.
+The old couple was very happy.
+
+Their kindness was rewarded.
 </div>
 
 <div class="quiz">
 <h3>Quiz A – Choose (5)</h3>
 
-<p>1. Who met the statues?</p>
+<p>1. Who gave hats to the statues?</p>
 <input type="radio" name="q1" value="1">An old man<br>
-<input type="radio" name="q1" value="0">A child<br>
+<input type="radio" name="q1" value="0">A merchant<br>
 
-<p>2. What did he give?</p>
-<input type="radio" name="q2" value="1">Hats<br>
-<input type="radio" name="q2" value="0">Food<br>
+<p>2. What kind of day was it?</p>
+<input type="radio" name="q2" value="1">Snowy<br>
+<input type="radio" name="q2" value="0">Sunny<br>
 
-<p>3. When did gifts come?</p>
-<input type="radio" name="q3" value="1">At night<br>
-<input type="radio" name="q3" value="0">In the morning<br>
+<p>3. What were the statues?</p>
+<input type="radio" name="q3" value="1">Jizo statues<br>
+<input type="radio" name="q3" value="0">Animal statues<br>
 
-<p>4. How did the man feel?</p>
-<input type="radio" name="q4" value="1">Happy<br>
-<input type="radio" name="q4" value="0">Angry<br>
+<p>4. What did the old man use for the last statue?</p>
+<input type="radio" name="q4" value="1">His scarf<br>
+<input type="radio" name="q4" value="0">His shoes<br>
 
-<p>5. What is the message?</p>
-<input type="radio" name="q5" value="1">Be kind<br>
-<input type="radio" name="q5" value="0">Be fast<br>
+<p>5. What happened at the end?</p>
+<input type="radio" name="q5" value="1">They received gifts<br>
+<input type="radio" name="q5" value="0">They lost their house<br>
 
 <h3>Quiz B – Write (5)</h3>
-1. What was the weather like?<br><input id="w1"><br>
+1. Why did the old man feel sorry for the statues?<br><input id="w1"><br>
 2. What were the statues made of?<br><input id="w2"><br>
-3. Why did he give hats?<br><input id="w3"><br>
-4. What came to his house?<br><input id="w4"><br>
-5. What lesson did you learn?<br><input id="w5"><br>
+3. Why did he give them hats?<br><input id="w3"><br>
+4. What came to their house at night?<br><input id="w4"><br>
+5. What lesson do you learn from this story?<br><input id="w5"><br>
 
 <button onclick="check()">Check Answer</button>
 <div id="result"></div>
@@ -69,22 +79,31 @@ Kindness brings happiness.
 <script>
 function speak(){
  stopVoice();
- const u=new SpeechSynthesisUtterance(story.innerText);
- u.lang="en-US";u.rate=0.5;u.pitch=1.2;
+ const u = new SpeechSynthesisUtterance(story.innerText);
+ u.lang = "en-US";
+ u.rate = 0.5;
+ u.pitch = 1.2;
  speechSynthesis.speak(u);
 }
-function stopVoice(){speechSynthesis.cancel();}
+
+function stopVoice(){
+ speechSynthesis.cancel();
+}
+
 function check(){
- let score=0;
+ let score = 0;
+
  for(let i=1;i<=5;i++){
-  const q=document.querySelector(`input[name="q${i}"]:checked`);
+  const q = document.querySelector(`input[name="q${i}"]:checked`);
   if(q && q.value==="1") score++;
  }
- const keys=["snow","stone","warm","gifts","kind"];
+
+ const keys = ["snow","stone","warm","gifts","kind"];
  keys.forEach((k,i)=>{
   if(document.getElementById("w"+(i+1)).value.toLowerCase().includes(k)) score++;
  });
- result.innerHTML=`<p class="score">Score: ${score} / 10</p>`;
+
+ result.innerHTML = `<p class="score">Score: ${score} / 10</p>`;
 }
 </script>
 
