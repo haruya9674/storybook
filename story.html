@@ -2,241 +2,111 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Story</title>
+<title>English Story Game</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-body {
+body{
   font-family: system-ui, sans-serif;
-  background: #f2f6fb;
-  padding: 16px;
+  background:#f7f9fc;
+  padding:20px;
+  line-height:1.6;
 }
-
-.container {
-  max-width: 800px;
-  margin: auto;
-  background: #fff;
-  padding: 20px;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0,0,0,.1);
+h1{margin-top:0;}
+button{
+  padding:10px 16px;
+  margin:8px 0;
+  font-size:16px;
 }
-
-.story {
-  white-space: pre-line;
-  margin-bottom: 20px;
+.story-box{
+  background:white;
+  padding:16px;
+  border-radius:10px;
 }
-
-button {
-  width: 100%;
-  padding: 12px;
-  margin-top: 10px;
-  font-size: 16px;
-  border-radius: 8px;
-  border: none;
-  background: #4caf50;
-  color: white;
+.question-box{
+  margin-top:20px;
 }
-
-.secondary { background: #2196f3; }
-.answer { background: #ff9800; }
-
-.question {
-  margin-bottom: 16px;
+.answer{
+  display:none;
+  background:#eef3ff;
+  padding:12px;
+  border-radius:8px;
+  margin-top:10px;
 }
-
-.answer-text {
-  display: none;
-  font-size: 14px;
-  color: #555;
+.back{
+  margin-top:30px;
 }
 </style>
 </head>
 
 <body>
-<div class="container">
 
-<h1 id="title"></h1>
+<h1 id="story-title">The Rabbit and the Turtle</h1>
 
-<div class="story" id="story"></div>
+<button onclick="speak()">🔊 Listen Slowly</button>
 
-<button onclick="readStory()">🔊 Read Story</button>
-<button onclick="startGame()">▶ Start Questions</button>
+<div class="story-box" id="story">
+One sunny day, a rabbit met a turtle in the forest.
+The rabbit was very fast and proud of himself.
+The turtle was slow, but calm and kind.
 
-<div id="game" style="display:none;"></div>
+The rabbit said, “You are too slow.”
+The turtle smiled and said, “Let’s have a race.”
 
-<button class="secondary" onclick="location.href='index.html'">🏠 Back to Home</button>
+The race started.
+The rabbit ran very fast and went far ahead.
+He looked back and saw the turtle far behind.
 
+“I have time,” said the rabbit.
+He sat under a tree and fell asleep.
+
+The turtle walked step by step.
+He did not stop.
+He passed the sleeping rabbit.
+
+At the end, the turtle reached the finish line first.
+The rabbit woke up and ran fast, but it was too late.
+
+The turtle won the race.
+Slow and steady wins the race.
+</div>
+
+<div class="question-box">
+<h3>Questions</h3>
+<ol>
+  <li>Who were in the race?</li>
+  <li>Why did the rabbit stop?</li>
+  <li>What did the turtle do?</li>
+  <li>Who won the race and why?</li>
+</ol>
+
+<button onclick="showAnswer()">✅ Check Answers</button>
+
+<div class="answer" id="answer">
+1. A rabbit and a turtle.<br>
+2. He thought he had enough time and slept.<br>
+3. He walked slowly and did not stop.<br>
+4. The turtle won because he kept going.
+</div>
+</div>
+
+<div class="back">
+<a href="index.html">⬅ Back to Home</a>
 </div>
 
 <script>
-// =====================
-// STORY DATA
-// =====================
-const stories = [
-{
-  title: "🐰🐢 The Rabbit and the Turtle",
-  text: `One sunny day, a rabbit and a turtle meet in the forest.
-
-The rabbit is very fast.
-He likes to run and show off.
-He is proud of himself.
-
-The turtle is slow.
-He walks very slowly.
-But he is calm and patient.
-
-The rabbit says,
-"Let’s have a race!"
-
-The turtle says,
-"Okay."
-
-The race starts.
-The rabbit runs very fast.
-Soon, he is far in front.
-
-The rabbit looks back.
-The turtle is far behind.
-
-"I have time," says the rabbit.
-He sleeps under a tree.
-
-The turtle walks step by step.
-He does not stop.
-
-At the end,
-the turtle wins the race.
-
-Slow and steady wins the race.`,
-  questions: [
-    { q: "Who are in the race?", a: "A rabbit and a turtle", options: ["A rabbit and a turtle", "A dog and a cat"] },
-    { q: "Why does the rabbit sleep?", a: "He thinks he has time", options: ["He is tired", "He thinks he has time"] },
-    { q: "Who wins the race?", a: "The turtle", options: ["The rabbit", "The turtle"] }
-  ],
-  grammar: [
-    { q: "The rabbit is fast ____ proud.", a: "and" },
-    { q: "The turtle is slow ____ calm.", a: "but" },
-    { q: "The rabbit sleeps ____ he has time.", a: "because" }
-  ]
-},
-{
-  title: "🍑 Momotaro",
-  text: `Long ago, an old man and an old woman live in a small village.
-
-Every day, the old man works outside.
-The old woman works at home.
-
-One day, the old woman goes to the river.
-She sees a big peach.
-
-She takes the peach home.
-When she cuts it,
-a baby boy comes out.
-
-They name him Momotaro.
-
-Momotaro grows strong and kind.
-He likes to help people.
-
-One day, he hears about bad ogres.
-They hurt people.
-
-Momotaro goes on a trip.
-He meets a dog, a monkey, and a bird.
-They become friends.
-
-Together, they fight the ogres.
-They win.
-
-Momotaro comes home.
-Everyone is happy.`,
-  questions: [
-    { q: "Where do they live?", a: "In a small village", options: ["In a city", "In a small village"] },
-    { q: "Where does the peach come from?", a: "The river", options: ["The river", "The mountain"] },
-    { q: "Who helps Momotaro?", a: "His friends", options: ["The ogres", "His friends"] }
-  ],
-  grammar: [
-    { q: "Momotaro is strong ____ kind.", a: "and" },
-    { q: "He goes on a trip ____ he helps people.", a: "because" },
-    { q: "The ogres are bad ____ Momotaro is brave.", a: "but" }
-  ]
-}
-];
-
-// =====================
-// LOAD STORY
-// =====================
-const params = new URLSearchParams(location.search);
-let storyIndex = Number(params.get("story")) || 0;
-let current = stories[storyIndex];
-
-document.getElementById("title").textContent = current.title;
-document.getElementById("story").textContent = current.text;
-
-// =====================
-// SPEECH
-// =====================
-function readStory() {
+function speak(){
   speechSynthesis.cancel();
-  const u = new SpeechSynthesisUtterance(current.text);
-  u.lang = "en-US";
-  speechSynthesis.speak(u);
+  const text = document.getElementById("story").innerText;
+  const utterance = new SpeechSynthesisUtterance(text);
+  utterance.lang = "en-US";
+  utterance.rate = 0.75;   // ゆっくり
+  utterance.pitch = 1.2;   // やさしい
+  speechSynthesis.speak(utterance);
 }
 
-// =====================
-// GAME
-// =====================
-function startGame() {
-  const game = document.getElementById("game");
-  game.innerHTML = "<h2>Questions</h2>";
-
-  current.questions.forEach((item, i) => {
-    game.innerHTML += `
-      <div class="question">
-        ${i+1}. ${item.q}
-        <select data-answer="${item.a}">
-          <option value="">-- choose --</option>
-          ${item.options.map(o => `<option>${o}</option>`).join("")}
-        </select>
-        <div class="answer-text">Answer: ${item.a}</div>
-      </div>`;
-  });
-
-  game.innerHTML += "<h2>Grammar</h2>";
-
-  current.grammar.forEach(item => {
-    game.innerHTML += `
-      <div class="question">
-        ${item.q}
-        <input data-answer="${item.a}">
-        <div class="answer-text">Answer: ${item.a}</div>
-      </div>`;
-  });
-
-  game.innerHTML += `
-    <button onclick="checkAnswers()">✔ Check Answers</button>
-    <button class="answer" onclick="showAnswers()">👀 Show Answers</button>
-    <button class="secondary" onclick="nextStory()">➡ Next Story</button>
-  `;
-
-  game.style.display = "block";
-}
-
-function checkAnswers() {
-  let score = 0;
-  document.querySelectorAll("[data-answer]").forEach(el => {
-    if (el.value.toLowerCase() === el.dataset.answer.toLowerCase()) score++;
-  });
-  alert(`Score: ${score}`);
-}
-
-function showAnswers() {
-  document.querySelectorAll(".answer-text").forEach(el => el.style.display = "block");
-}
-
-function nextStory() {
-  storyIndex = (storyIndex + 1) % stories.length;
-  location.href = `story.html?story=${storyIndex}`;
+function showAnswer(){
+  document.getElementById("answer").style.display="block";
 }
 </script>
 
