@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>The Rabbit and the Turtle</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body{font-family:system-ui;padding:20px;}
+.story{background:#f7f9fc;padding:16px;border-radius:10px;}
+.answer{display:none;background:#eef;padding:10px;margin-top:10px;}
+</style>
+</head>
+
+<body onbeforeunload="stopVoice()">
+
+<h2>The Rabbit and the Turtle</h2>
+<button onclick="speak()">🔊 Listen Slowly</button>
+
+<div class="story" id="story">
+One day, a rabbit met a turtle.
+The rabbit was fast and proud.
+The turtle was slow but calm.
+
+The rabbit ran very fast and slept.
+The turtle walked step by step.
+He did not stop.
+
+The turtle won the race.
+</div>
+
+<h3>Quiz 1 (Choose)</h3>
+Who won the race?<br>
+<input type="radio">Rabbit<br>
+<input type="radio">Turtle<br>
+
+<h3>Quiz 2 (Write)</h3>
+Why did the rabbit lose?<br>
+<input type="text">
+
+<button onclick="show()">Check</button>
+<div class="answer" id="ans">
+1. Turtle<br>
+2. He slept / He stopped.
+</div>
+
+<br>
+<a href="story2.html" onclick="stopVoice()">➡ Next</a> |
+<a href="index.html" onclick="stopVoice()">Home</a>
+
+<script>
+function speak(){
+ stopVoice();
+ const u=new SpeechSynthesisUtterance(story.innerText);
+ u.lang="en-US";u.rate=0.55;u.pitch=1.2;
+ speechSynthesis.speak(u);
+}
+function stopVoice(){speechSynthesis.cancel();}
+function show(){ans.style.display="block";}
+</script>
+</body>
+</html>
