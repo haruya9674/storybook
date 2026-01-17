@@ -4,39 +4,33 @@
 <meta charset="UTF-8">
 <title>English Story Game</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <style>
 body{
   font-family: system-ui, sans-serif;
   background:#f5f7fb;
   padding:20px;
 }
-h1{ text-align:center; }
-
+h1{text-align:center;}
 .lang button{
   margin:4px;
   padding:6px 12px;
-  border:none;
-  border-radius:6px;
   background:#4CAF50;
   color:white;
-  font-size:14px;
+  border:none;
+  border-radius:6px;
 }
-
 .story-list a{
   display:block;
   margin:12px 0;
   padding:14px;
-  background:#ffffff;
+  background:white;
   border-left:6px solid #4CAF50;
   border-radius:8px;
   text-decoration:none;
   color:#333;
-  font-size:16px;
 }
 </style>
 </head>
-
 <body>
 
 <h1 id="title">English Story Game</h1>
@@ -48,38 +42,26 @@ h1{ text-align:center; }
 </div>
 
 <p id="desc">
-Read a story, listen carefully, think, and answer the questions.
-This page is for elementary EFL learners.
+Read a story, listen slowly, think, and answer the questions.
 </p>
 
 <div class="story-list">
-  <!-- 今は全て story.html に飛ばす -->
-  <a href="story.html">🐰🐢 Story 1: The Rabbit and the Turtle</a>
-  <a href="story.html">🍑 Story 2: Momotaro</a>
-  <a href="story.html">🐢 Story 3: Urashima Taro</a>
-  <a href="story.html">🕊️ Story 4: The Grateful Crane</a>
-  <a href="story.html">🎍 Story 5: Kasa Jizo</a>
+  <a href="story1.html">🐰🐢 The Rabbit and the Turtle</a>
+  <a href="story2.html">🍑 Momotaro</a>
+  <a href="story3.html">🐢 Urashima Taro</a>
+  <a href="story4.html">🕊️ The Grateful Crane</a>
+  <a href="story5.html">🎍 Kasa Jizo</a>
 </div>
 
 <script>
-const text = {
-  en:{
-    title:"English Story Game",
-    desc:"Read a story, listen carefully, think, and answer the questions. This page is for elementary EFL learners."
-  },
-  ja:{
-    title:"英語ストーリーゲーム",
-    desc:"ストーリーを読んで、聞いて、考えて、答える学習ページです。小学生向け英語学習用です。"
-  },
-  ko:{
-    title:"영어 이야기 게임",
-    desc:"이야기를 읽고, 듣고, 생각하고, 질문에 답하는 영어 학습 페이지입니다."
-  }
+const text={
+ en:{title:"English Story Game",desc:"Read a story, listen slowly, think, and answer the questions."},
+ ja:{title:"英語ストーリーゲーム",desc:"ストーリーを読んで、ゆっくり聞いて、考えて答えます。"},
+ ko:{title:"영어 이야기 게임",desc:"이야기를 읽고 천천히 듣고 질문에 답하세요."}
 };
-
 function setLang(l){
-  document.getElementById("title").innerText=text[l].title;
-  document.getElementById("desc").innerText=text[l].desc;
+ title.innerText=text[l].title;
+ desc.innerText=text[l].desc;
 }
 </script>
 
