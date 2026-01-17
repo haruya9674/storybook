@@ -10,6 +10,8 @@ h2{color:#2e7d32;}
 button{background:#4CAF50;color:white;border:none;padding:10px 16px;border-radius:6px;margin:8px 0;}
 .story{background:white;border-left:6px solid #4CAF50;padding:16px;border-radius:8px;white-space:pre-line;}
 .quiz{background:white;margin-top:20px;padding:16px;border-radius:8px;}
+.correct{color:green;}
+.wrong{color:red;}
 .score{font-weight:bold;margin-top:10px;}
 </style>
 </head>
@@ -20,60 +22,64 @@ button{background:#4CAF50;color:white;border:none;padding:10px 16px;border-radiu
 <button onclick="speak()">🔊 Listen story</button>
 
 <div class="story" id="story">
-Long ago, a poor but kind man lived alone in a small village.
+One cold day, a poor man found an injured crane.
 
-One cold winter day, he found a crane trapped in a hunter’s net.
-The crane was injured and could not fly.
-The man carefully freed the crane and let it go.
+He helped the crane and set it free.
+That night, a woman came to his house.
 
-That night, a young woman came to his house.
-She said she had nowhere to go, so the man welcomed her.
+She stayed with him and made beautiful cloth.
+She said, “Please do not look while I work.”
 
-The woman worked hard and made beautiful cloth.
-She sold the cloth, and they became less poor.
+The man became curious and looked inside.
+The woman was the crane.
 
-But the woman said one important thing.
-“Please do not look inside the room while I am working.”
-
-One day, the man became curious.
-He quietly looked inside the room.
-
-Inside, he saw a crane pulling out her own feathers.
-The woman was the crane he had saved.
-
-She looked sad and said goodbye.
-Then she flew away and never returned.
+She flew away and never returned.
 </div>
 
 <div class="quiz">
 <h3>Quiz A – Choose (5)</h3>
 
-<p>1. What animal did the man help?</p>
-<input type="radio" name="q1" value="1">A crane<br>
-<input type="radio" name="q1" value="0">A horse<br>
+<p>1. Who did the man help?</p>
+<label><input type="radio" name="q1" value="1">A crane</label><br>
+<label><input type="radio" name="q1" value="0">A dog</label><br>
 
-<p>2. Where was the crane trapped?</p>
-<input type="radio" name="q2" value="1">In a net<br>
-<input type="radio" name="q2" value="0">In a box<br>
+<p>2. What did the woman make?</p>
+<label><input type="radio" name="q2" value="1">Cloth</label><br>
+<label><input type="radio" name="q2" value="0">Shoes</label><br>
 
-<p>3. What did the woman make?</p>
-<input type="radio" name="q3" value="1">Beautiful cloth<br>
-<input type="radio" name="q3" value="0">Shoes<br>
+<p>3. What promise did she ask?</p>
+<label><input type="radio" name="q3" value="1">Do not look</label><br>
+<label><input type="radio" name="q3" value="0">Do not leave</label><br>
 
-<p>4. What promise did the man break?</p>
-<input type="radio" name="q4" value="1">He looked inside the room<br>
-<input type="radio" name="q4" value="0">He left the house<br>
+<p>4. What did the man do?</p>
+<label><input type="radio" name="q4" value="1">He looked</label><br>
+<label><input type="radio" name="q4" value="0">He slept</label><br>
 
-<p>5. How did the story end?</p>
-<input type="radio" name="q5" value="1">The crane flew away<br>
-<input type="radio" name="q5" value="0">They lived happily together<br>
+<p>5. What happened at the end?</p>
+<label><input type="radio" name="q5" value="1">The crane flew away</label><br>
+<label><input type="radio" name="q5" value="0">They lived together</label><br>
 
-<h3>Quiz B – Write (5)</h3>
-1. Why did the crane come back as a woman?<br><input id="w1"><br>
-2. What kind of man was he?<br><input id="w2"><br>
-3. What did the crane use to make cloth?<br><input id="w3"><br>
-4. How did the crane feel at the end?<br><input id="w4"><br>
-5. What lesson do you learn from this story?<br><input id="w5"><br>
+<h3>Quiz B – Choose (5)</h3>
+
+<p>6. Why did the crane come back?</p>
+<label><input type="radio" name="q6" value="1">To say thank you</label><br>
+<label><input type="radio" name="q6" value="0">To take food</label><br>
+
+<p>7. Who was the woman?</p>
+<label><input type="radio" name="q7" value="1">The crane</label><br>
+<label><input type="radio" name="q7" value="0">A villager</label><br>
+
+<p>8. What did the man break?</p>
+<label><input type="radio" name="q8" value="1">A promise</label><br>
+<label><input type="radio" name="q8" value="0">A chair</label><br>
+
+<p>9. How did the crane feel?</p>
+<label><input type="radio" name="q9" value="1">Sad</label><br>
+<label><input type="radio" name="q9" value="0">Angry</label><br>
+
+<p>10. What is the lesson?</p>
+<label><input type="radio" name="q10" value="1">Keep promises</label><br>
+<label><input type="radio" name="q10" value="0">Be rich</label><br>
 
 <button onclick="check()">Check Answer</button>
 <div id="result"></div>
@@ -87,30 +93,20 @@ Then she flew away and never returned.
 function speak(){
  stopVoice();
  const u=new SpeechSynthesisUtterance(story.innerText);
- u.lang="en-US";
- u.rate=0.5;
- u.pitch=1.2;
+ u.lang="en-US";u.rate=0.5;u.pitch=1.2;
  speechSynthesis.speak(u);
 }
-
-function stopVoice(){
- speechSynthesis.cancel();
-}
-
+function stopVoice(){speechSynthesis.cancel();}
 function check(){
  let score=0;
-
- for(let i=1;i<=5;i++){
+ let html="";
+ for(let i=1;i<=10;i++){
   const q=document.querySelector(`input[name="q${i}"]:checked`);
-  if(q && q.value==="1") score++;
+  if(q && q.value==="1"){score++; html+=`<p class="correct">Q${i}: Correct</p>`;}
+  else html+=`<p class="wrong">Q${i}: Wrong</p>`;
  }
-
- const keys=["help","kind","feather","sad","promise"];
- keys.forEach((k,i)=>{
-  if(document.getElementById("w"+(i+1)).value.toLowerCase().includes(k)) score++;
- });
-
- result.innerHTML = `<p class="score">Score: ${score} / 10</p>`;
+ html+=`<p class="score">Score: ${score} / 10</p>`;
+ result.innerHTML=html;
 }
 </script>
 
