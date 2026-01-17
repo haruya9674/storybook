@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Urashima Taro</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body{font-family:system-ui;padding:20px;}
+.story{background:#f7f9fc;padding:16px;border-radius:10px;}
+.answer{display:none;background:#eef;padding:10px;margin-top:10px;}
+</style>
+</head>
+
+<body onbeforeunload="stopVoice()">
+
+<h2>Urashima Taro</h2>
+<button onclick="speak()">🔊 Listen Slowly</button>
+
+<div class="story" id="story">
+Urashima Taro was a kind fisherman.
+One day, he saved a turtle on the beach.
+The turtle took him to the sea palace.
+
+Urashima stayed there and had fun.
+When he returned home, many years had passed.
+He opened a box from the turtle.
+Suddenly, he became very old.
+</div>
+
+<h3>Quiz 1 (Choose)</h3>
+Who did Urashima save?<br>
+<input type="radio" name="q1">A bird<br>
+<input type="radio" name="q1">A turtle<br>
+<input type="radio" name="q1">A dog<br>
+
+<h3>Quiz 2 (Write)</h3>
+What happened when he opened the box?<br>
+<input type="text">
+
+<button onclick="show()">Check</button>
+<div class="answer" id="ans">
+Quiz 1: A turtle<br>
+Quiz 2: He became old.
+</div>
+
+<br>
+<a href="story4.html" onclick="stopVoice()">➡ Next</a> |
+<a href="index.html" onclick="stopVoice()">Home</a>
+
+<script>
+function speak(){
+ stopVoice();
+ const u=new SpeechSynthesisUtterance(story.innerText);
+ u.lang="en-US";u.rate=0.55;u.pitch=1.2;
+ speechSynthesis.speak(u);
+}
+function stopVoice(){speechSynthesis.cancel();}
+function show(){ans.style.display="block";}
+</script>
+
+</body>
+</html>
