@@ -1,61 +1,135 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <title>The Rabbit and the Turtle</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
-body{font-family:system-ui;padding:20px;}
-.story{background:#f7f9fc;padding:16px;border-radius:10px;}
-.answer{display:none;background:#eef;padding:10px;margin-top:10px;}
+body{
+  font-family:system-ui,sans-serif;
+  background:#f5f7fb;
+  padding:20px;
+}
+h2{color:#2e7d32;}
+button{
+  background:#4CAF50;
+  color:white;
+  border:none;
+  padding:10px 16px;
+  border-radius:6px;
+  margin:8px 0;
+}
+.story{
+  background:white;
+  border-left:6px solid #4CAF50;
+  padding:16px;
+  border-radius:8px;
+  white-space:pre-line;
+}
+.quiz{
+  background:white;
+  margin-top:20px;
+  padding:16px;
+  border-radius:8px;
+}
+.correct{color:green;}
+.wrong{color:red;}
+.score{
+  font-weight:bold;
+  margin-top:10px;
+}
 </style>
 </head>
 
 <body onbeforeunload="stopVoice()">
 
-<h2>The Rabbit and the Turtle</h2>
-<button onclick="speak()">🔊 Listen Slowly</button>
+<h2>🐰🐢 The Rabbit and the Turtle</h2>
+<button onclick="speak()">🔊 Listen story</button>
 
 <div class="story" id="story">
-One day, a rabbit met a turtle.
-The rabbit was fast and proud.
-The turtle was slow but calm.
+One sunny day, a rabbit met a turtle in the forest.
 
-The rabbit ran very fast and slept.
-The turtle walked step by step.
-He did not stop.
+The rabbit was very fast and proud.
+The turtle was slow, but calm and kind.
 
-The turtle won the race.
+The rabbit said, “You are too slow.”
+The turtle said, “Let’s have a race.”
+
+The rabbit ran very fast and slept under a tree.
+The turtle walked step by step and did not stop.
+
+At the end, the turtle won the race.
+
+Slow and steady wins the race.
 </div>
 
-<h3>Quiz 1 (Choose)</h3>
-Who won the race?<br>
-<input type="radio">Rabbit<br>
-<input type="radio">Turtle<br>
+<div class="quiz">
+<h3>Quiz A – Choose (5)</h3>
 
-<h3>Quiz 2 (Write)</h3>
-Why did the rabbit lose?<br>
-<input type="text">
+<p>1. Who were in the race?</p>
+<input type="radio" name="q1" value="0">Two rabbits<br>
+<input type="radio" name="q1" value="1">A rabbit and a turtle<br>
 
-<button onclick="show()">Check</button>
-<div class="answer" id="ans">
-1. Turtle<br>
-2. He slept / He stopped.
+<p>2. Who was fast?</p>
+<input type="radio" name="q2" value="1">The rabbit<br>
+<input type="radio" name="q2" value="0">The turtle<br>
+
+<p>3. Why did the rabbit lose?</p>
+<input type="radio" name="q3" value="1">He slept<br>
+<input type="radio" name="q3" value="0">He was slow<br>
+
+<p>4. Who did not stop?</p>
+<input type="radio" name="q4" value="1">The turtle<br>
+<input type="radio" name="q4" value="0">The rabbit<br>
+
+<p>5. Who won the race?</p>
+<input type="radio" name="q5" value="1">The turtle<br>
+<input type="radio" name="q5" value="0">The rabbit<br>
+
+<h3>Quiz B – Write (5)</h3>
+1. Where did they meet?<br><input id="w1"><br>
+2. What did the rabbit do under the tree?<br><input id="w2"><br>
+3. How did the turtle walk?<br><input id="w3"><br>
+4. Who reached the finish line first?<br><input id="w4"><br>
+5. What is the lesson of the story?<br><input id="w5"><br>
+
+<button onclick="check()">Check Answer</button>
+
+<div id="result"></div>
 </div>
 
 <br>
-<a href="story2.html" onclick="stopVoice()">➡ Next</a> |
+<a href="story2.html" onclick="stopVoice()">➡ Next story</a> |
 <a href="index.html" onclick="stopVoice()">Home</a>
 
 <script>
 function speak(){
- stopVoice();
- const u=new SpeechSynthesisUtterance(story.innerText);
- u.lang="en-US";u.rate=0.55;u.pitch=1.2;
- speechSynthesis.speak(u);
+  stopVoice();
+  const u=new SpeechSynthesisUtterance(story.innerText);
+  u.lang="en-US";
+  u.rate=0.5;
+  u.pitch=1.2;
+  speechSynthesis.speak(u);
 }
-function stopVoice(){speechSynthesis.cancel();}
-function show(){ans.style.display="block";}
+function stopVoice(){
+  speechSynthesis.cancel();
+}
+function check(){
+  let score=0;
+  for(let i=1;i<=5;i++){
+    const q=document.querySelector(`input[name="q${i}"]:checked`);
+    if(q && q.value==="1") score++;
+  }
+  const answers=[
+    "forest","slept","slowly","turtle","slow and steady"
+  ];
+  answers.forEach((a,i)=>{
+    if(document.getElementById("w"+(i+1)).value.toLowerCase().includes(a))
+      score++;
+  });
+  result.innerHTML=`<p class="score">Score: ${score} / 10</p>`;
+}
 </script>
+
 </body>
 </html>
