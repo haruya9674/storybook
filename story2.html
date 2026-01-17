@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Momotaro</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body{font-family:system-ui;padding:20px;}
+.story{background:#f7f9fc;padding:16px;border-radius:10px;}
+.answer{display:none;background:#eef;padding:10px;margin-top:10px;}
+</style>
+</head>
+
+<body onbeforeunload="stopVoice()">
+
+<h2>Momotaro</h2>
+<button onclick="speak()">🔊 Listen Slowly</button>
+
+<div class="story" id="story">
+Long ago, an old man and an old woman lived in a village.
+One day, the old woman found a big peach in the river.
+Inside the peach was a baby boy.
+They named him Momotaro.
+
+Momotaro grew strong and kind.
+One day, he went to fight the ogres.
+On the way, he met a dog, a monkey, and a bird.
+They became friends and helped him.
+
+Together, they won the battle.
+Momotaro returned home safely.
+</div>
+
+<h3>Quiz 1 (Choose)</h3>
+Who helped Momotaro?<br>
+<input type="radio" name="q1">A cat<br>
+<input type="radio" name="q1">A fish<br>
+<input type="radio" name="q1">A dog, a monkey, and a bird<br>
+
+<h3>Quiz 2 (Write)</h3>
+Where was Momotaro found?<br>
+<input type="text">
+
+<button onclick="show()">Check</button>
+<div class="answer" id="ans">
+Quiz 1: A dog, a monkey, and a bird<br>
+Quiz 2: In a peach / In the peach.
+</div>
+
+<br>
+<a href="story3.html" onclick="stopVoice()">➡ Next</a> |
+<a href="index.html" onclick="stopVoice()">Home</a>
+
+<script>
+function speak(){
+ stopVoice();
+ const u=new SpeechSynthesisUtterance(story.innerText);
+ u.lang="en-US";u.rate=0.55;u.pitch=1.2;
+ speechSynthesis.speak(u);
+}
+function stopVoice(){speechSynthesis.cancel();}
+function show(){ans.style.display="block";}
+</script>
+
+</body>
+</html>
