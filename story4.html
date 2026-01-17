@@ -20,46 +20,60 @@ button{background:#4CAF50;color:white;border:none;padding:10px 16px;border-radiu
 <button onclick="speak()">🔊 Listen story</button>
 
 <div class="story" id="story">
-One day, a man helped an injured crane.
+Long ago, a poor but kind man lived alone in a small village.
 
-Later, a woman came to his house.
-She made beautiful cloth for him.
+One cold winter day, he found a crane trapped in a hunter’s net.
+The crane was injured and could not fly.
+The man carefully freed the crane and let it go.
 
-She said, “Please do not look.”
-The man looked inside the room.
+That night, a young woman came to his house.
+She said she had nowhere to go, so the man welcomed her.
 
-The crane flew away and never returned.
+The woman worked hard and made beautiful cloth.
+She sold the cloth, and they became less poor.
+
+But the woman said one important thing.
+“Please do not look inside the room while I am working.”
+
+One day, the man became curious.
+He quietly looked inside the room.
+
+Inside, he saw a crane pulling out her own feathers.
+The woman was the crane he had saved.
+
+She looked sad and said goodbye.
+Then she flew away and never returned.
 </div>
 
 <div class="quiz">
 <h3>Quiz A – Choose (5)</h3>
 
-<p>1. Who did the man help?</p>
+<p>1. What animal did the man help?</p>
 <input type="radio" name="q1" value="1">A crane<br>
-<input type="radio" name="q1" value="0">A dog<br>
+<input type="radio" name="q1" value="0">A horse<br>
 
-<p>2. What did the woman make?</p>
-<input type="radio" name="q2" value="1">Cloth<br>
-<input type="radio" name="q2" value="0">Food<br>
+<p>2. Where was the crane trapped?</p>
+<input type="radio" name="q2" value="1">In a net<br>
+<input type="radio" name="q2" value="0">In a box<br>
 
-<p>3. What promise did she make?</p>
-<input type="radio" name="q3" value="1">Do not look<br>
-<input type="radio" name="q3" value="0">Do not speak<br>
+<p>3. What did the woman make?</p>
+<input type="radio" name="q3" value="1">Beautiful cloth<br>
+<input type="radio" name="q3" value="0">Shoes<br>
 
-<p>4. What did the man do?</p>
-<input type="radio" name="q4" value="1">He looked<br>
-<input type="radio" name="q4" value="0">He slept<br>
+<p>4. What promise did the man break?</p>
+<input type="radio" name="q4" value="1">He looked inside the room<br>
+<input type="radio" name="q4" value="0">He left the house<br>
 
-<p>5. What happened at the end?</p>
-<input type="radio" name="q5" value="1">The crane left<br>
-<input type="radio" name="q5" value="0">They lived together<br>
+<p>5. How did the story end?</p>
+<input type="radio" name="q5" value="1">The crane flew away<br>
+<input type="radio" name="q5" value="0">They lived happily together<br>
 
 <h3>Quiz B – Write (5)</h3>
-1. Why did the crane come back?<br><input id="w1"><br>
-2. What did she become?<br><input id="w2"><br>
-3. What did the man break?<br><input id="w3"><br>
-4. How did the crane feel?<br><input id="w4"><br>
-5. What lesson do you learn?<br><input id="w5"><br>
+1. Why did the crane come back as a woman?<br><input id="w1"><br>
+2. What kind of man was he?<br><input id="w2"><br>
+3. What did the crane use to make cloth?<br><input id="w3"><br>
+4. How did the crane feel at the end?<br><input id="w4"><br>
+5. What lesson do you learn from this story?<br><input id="w5"><br>
 
 <button onclick="check()">Check Answer</button>
 <div id="result"></div>
@@ -73,21 +87,30 @@ The crane flew away and never returned.
 function speak(){
  stopVoice();
  const u=new SpeechSynthesisUtterance(story.innerText);
- u.lang="en-US";u.rate=0.5;u.pitch=1.2;
+ u.lang="en-US";
+ u.rate=0.5;
+ u.pitch=1.2;
  speechSynthesis.speak(u);
 }
-function stopVoice(){speechSynthesis.cancel();}
+
+function stopVoice(){
+ speechSynthesis.cancel();
+}
+
 function check(){
  let score=0;
+
  for(let i=1;i<=5;i++){
   const q=document.querySelector(`input[name="q${i}"]:checked`);
   if(q && q.value==="1") score++;
  }
- const keys=["help","woman","promise","sad","honest"];
+
+ const keys=["help","kind","feather","sad","promise"];
  keys.forEach((k,i)=>{
   if(document.getElementById("w"+(i+1)).value.toLowerCase().includes(k)) score++;
  });
- result.innerHTML=`<p class="score">Score: ${score} / 10</p>`;
+
+ result.innerHTML = `<p class="score">Score: ${score} / 10</p>`;
 }
 </script>
 
