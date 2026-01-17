@@ -5,19 +5,23 @@
 <title>Kasa Jizo</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
-body{font-family:system-ui;padding:20px;}
-.story{background:#f7f9fc;padding:16px;border-radius:10px;}
-.answer{display:none;background:#eef;padding:10px;margin-top:10px;}
+body{font-family:system-ui;background:#f5f7fb;padding:20px;}
+h2{color:#2e7d32;}
+button{background:#4CAF50;color:white;border:none;padding:10px 16px;border-radius:6px;margin:8px 0;}
+.story{background:white;border-left:6px solid #4CAF50;padding:16px;border-radius:8px;white-space:pre-line;}
+.quiz{background:white;margin-top:20px;padding:16px;border-radius:8px;}
+.score{font-weight:bold;margin-top:10px;}
 </style>
 </head>
 
 <body onbeforeunload="stopVoice()">
 
-<h2>Kasa Jizo</h2>
-<button onclick="speak()">🔊 Listen Slowly</button>
+<h2>🎍 Kasa Jizo</h2>
+<button onclick="speak()">🔊 Listen story</button>
 
 <div class="story" id="story">
 One snowy day, an old man met stone statues.
+
 He gave them hats to keep them warm.
 That night, gifts came to his house.
 
@@ -25,20 +29,38 @@ The old man was happy.
 Kindness brings happiness.
 </div>
 
-<h3>Quiz 1 (Choose)</h3>
-What did the old man give?<br>
-<input type="radio" name="q1">Food<br>
-<input type="radio" name="q1">Hats<br>
-<input type="radio" name="q1">Shoes<br>
+<div class="quiz">
+<h3>Quiz A – Choose (5)</h3>
 
-<h3>Quiz 2 (Write)</h3>
-Why was the old man happy?<br>
-<input type="text">
+<p>1. Who met the statues?</p>
+<input type="radio" name="q1" value="1">An old man<br>
+<input type="radio" name="q1" value="0">A child<br>
 
-<button onclick="show()">Check</button>
-<div class="answer" id="ans">
-Quiz 1: Hats<br>
-Quiz 2: He received gifts / He was kind.
+<p>2. What did he give?</p>
+<input type="radio" name="q2" value="1">Hats<br>
+<input type="radio" name="q2" value="0">Food<br>
+
+<p>3. When did gifts come?</p>
+<input type="radio" name="q3" value="1">At night<br>
+<input type="radio" name="q3" value="0">In the morning<br>
+
+<p>4. How did the man feel?</p>
+<input type="radio" name="q4" value="1">Happy<br>
+<input type="radio" name="q4" value="0">Angry<br>
+
+<p>5. What is the message?</p>
+<input type="radio" name="q5" value="1">Be kind<br>
+<input type="radio" name="q5" value="0">Be fast<br>
+
+<h3>Quiz B – Write (5)</h3>
+1. What was the weather like?<br><input id="w1"><br>
+2. What were the statues made of?<br><input id="w2"><br>
+3. Why did he give hats?<br><input id="w3"><br>
+4. What came to his house?<br><input id="w4"><br>
+5. What lesson did you learn?<br><input id="w5"><br>
+
+<button onclick="check()">Check Answer</button>
+<div id="result"></div>
 </div>
 
 <br>
@@ -48,11 +70,22 @@ Quiz 2: He received gifts / He was kind.
 function speak(){
  stopVoice();
  const u=new SpeechSynthesisUtterance(story.innerText);
- u.lang="en-US";u.rate=0.55;u.pitch=1.2;
+ u.lang="en-US";u.rate=0.5;u.pitch=1.2;
  speechSynthesis.speak(u);
 }
 function stopVoice(){speechSynthesis.cancel();}
-function show(){ans.style.display="block";}
+function check(){
+ let score=0;
+ for(let i=1;i<=5;i++){
+  const q=document.querySelector(`input[name="q${i}"]:checked`);
+  if(q && q.value==="1") score++;
+ }
+ const keys=["snow","stone","warm","gifts","kind"];
+ keys.forEach((k,i)=>{
+  if(document.getElementById("w"+(i+1)).value.toLowerCase().includes(k)) score++;
+ });
+ result.innerHTML=`<p class="score">Score: ${score} / 10</p>`;
+}
 </script>
 
 </body>
