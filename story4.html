@@ -5,56 +5,90 @@
 <title>The Grateful Crane</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
-body{font-family:system-ui;padding:20px;}
-.story{background:#f7f9fc;padding:16px;border-radius:10px;}
-.answer{display:none;background:#eef;padding:10px;margin-top:10px;}
+body{font-family:system-ui;background:#f5f7fb;padding:20px;}
+h2{color:#2e7d32;}
+button{background:#4CAF50;color:white;border:none;padding:10px 16px;border-radius:6px;margin:8px 0;}
+.story{background:white;border-left:6px solid #4CAF50;padding:16px;border-radius:8px;white-space:pre-line;}
+.quiz{background:white;margin-top:20px;padding:16px;border-radius:8px;}
+.score{font-weight:bold;margin-top:10px;}
 </style>
 </head>
 
 <body onbeforeunload="stopVoice()">
 
-<h2>The Grateful Crane</h2>
-<button onclick="speak()">🔊 Listen Slowly</button>
+<h2>🕊️ The Grateful Crane</h2>
+<button onclick="speak()">🔊 Listen story</button>
 
 <div class="story" id="story">
 One day, a man helped an injured crane.
+
 Later, a woman came to his house.
 She made beautiful cloth for him.
 
 She said, “Please do not look.”
 The man looked inside the room.
+
 The crane flew away and never returned.
 </div>
 
-<h3>Quiz 1 (Choose)</h3>
-Why did the crane leave?<br>
-<input type="radio" name="q1">She was tired<br>
-<input type="radio" name="q1">The man broke the promise<br>
-<input type="radio" name="q1">She found a new home<br>
+<div class="quiz">
+<h3>Quiz A – Choose (5)</h3>
 
-<h3>Quiz 2 (Write)</h3>
-What lesson did this story teach?<br>
-<input type="text">
+<p>1. Who did the man help?</p>
+<input type="radio" name="q1" value="1">A crane<br>
+<input type="radio" name="q1" value="0">A dog<br>
 
-<button onclick="show()">Check</button>
-<div class="answer" id="ans">
-Quiz 1: The man broke the promise<br>
-Quiz 2: Keep promises / Be honest.
+<p>2. What did the woman make?</p>
+<input type="radio" name="q2" value="1">Cloth<br>
+<input type="radio" name="q2" value="0">Food<br>
+
+<p>3. What promise did she make?</p>
+<input type="radio" name="q3" value="1">Do not look<br>
+<input type="radio" name="q3" value="0">Do not speak<br>
+
+<p>4. What did the man do?</p>
+<input type="radio" name="q4" value="1">He looked<br>
+<input type="radio" name="q4" value="0">He slept<br>
+
+<p>5. What happened at the end?</p>
+<input type="radio" name="q5" value="1">The crane left<br>
+<input type="radio" name="q5" value="0">They lived together<br>
+
+<h3>Quiz B – Write (5)</h3>
+1. Why did the crane come back?<br><input id="w1"><br>
+2. What did she become?<br><input id="w2"><br>
+3. What did the man break?<br><input id="w3"><br>
+4. How did the crane feel?<br><input id="w4"><br>
+5. What lesson do you learn?<br><input id="w5"><br>
+
+<button onclick="check()">Check Answer</button>
+<div id="result"></div>
 </div>
 
 <br>
-<a href="story5.html" onclick="stopVoice()">➡ Next</a> |
+<a href="story5.html" onclick="stopVoice()">➡ Next story</a> |
 <a href="index.html" onclick="stopVoice()">Home</a>
 
 <script>
 function speak(){
  stopVoice();
  const u=new SpeechSynthesisUtterance(story.innerText);
- u.lang="en-US";u.rate=0.55;u.pitch=1.2;
+ u.lang="en-US";u.rate=0.5;u.pitch=1.2;
  speechSynthesis.speak(u);
 }
 function stopVoice(){speechSynthesis.cancel();}
-function show(){ans.style.display="block";}
+function check(){
+ let score=0;
+ for(let i=1;i<=5;i++){
+  const q=document.querySelector(`input[name="q${i}"]:checked`);
+  if(q && q.value==="1") score++;
+ }
+ const keys=["help","woman","promise","sad","honest"];
+ keys.forEach((k,i)=>{
+  if(document.getElementById("w"+(i+1)).value.toLowerCase().includes(k)) score++;
+ });
+ result.innerHTML=`<p class="score">Score: ${score} / 10</p>`;
+}
 </script>
 
 </body>
